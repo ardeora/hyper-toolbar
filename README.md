@@ -1,2 +1,2 @@
-# hyper-status-bar
-A productivity status bar for Hyper Terminal
+# hyper-toolbar
+A productivity toolbar for Hyper Terminal
