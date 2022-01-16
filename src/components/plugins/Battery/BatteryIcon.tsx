@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { motion, useAnimation } from 'framer-motion';
+import { ThemeContext } from '../../HyperToolbar';
+import themeObject from '../../../theme';
 
 interface BatteryIconProps {
   batteryLevel: number;
@@ -7,6 +9,7 @@ interface BatteryIconProps {
 }
 
 export const BatteryIcon: React.FC<BatteryIconProps> = ({ batteryLevel, charging }) => {
+  const theme = useContext(ThemeContext);
   const control = useAnimation();
 
   useEffect(() => {
@@ -22,14 +25,14 @@ export const BatteryIcon: React.FC<BatteryIconProps> = ({ batteryLevel, charging
 
   const minWidth = 15;
   const colors = {
-    critical: '#FF453A',
-    low: '#FFD60A',
-    ok: '#30D158',
+    critical: themeObject[theme].colors.red,
+    low: themeObject[theme].colors.yellow,
+    ok: themeObject[theme].colors.green,
   };
   const xPos = 29.4 + (100 - (batteryLevel * 100 > minWidth ? batteryLevel * 100 : minWidth));
   const width = batteryLevel * 100 > minWidth ? batteryLevel * 100 : minWidth;
   const batteryColor = batteryLevel > 0.5 ? colors.ok : batteryLevel > 0.25 ? colors.low : colors.critical;
-  const caseColor = batteryLevel > 0.15 ? '#f1f5f9' : `${colors.critical}c0`;
+  const caseColor = batteryLevel > 0.15 ? themeObject[theme].colors.secondary : `${colors.critical}c0`;
   const viewBox = `0 0 ${charging ? '214.1' : '144'} 78.5`;
 
   return (
@@ -51,7 +54,7 @@ export const BatteryIcon: React.FC<BatteryIconProps> = ({ batteryLevel, charging
       />
       {charging ? (
         <path
-          fill="#f1f5f9"
+          fill={themeObject[theme].colors.primary}
           id="bolt"
           d="M167.3,42.7l33.2-41.9c0.3-0.4,0.6-0.7,1-0.8s0.7-0.1,1,0.1
           c0.3,0.2,0.5,0.4,0.6,0.7c0.1,0.3,0.1,0.8-0.2,1.3l-11.4,31h21.4c0.4,0,0.8,0.1,0.9,0.3c0.2,0.2,0.3,0.5,0.3,0.7
