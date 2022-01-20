@@ -56,6 +56,7 @@ export const TimezoneSearch: React.FC<TimezoneSearchProps> = ({ isOpen, onSelect
             <IoSearch />
           </div>
           <input
+            spellCheck={false}
             ref={searchInputRef}
             value={timezoneSearch}
             onChange={(e) => setTimezoneSearch(e.target.value)}

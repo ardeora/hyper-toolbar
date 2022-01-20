@@ -1,6 +1,6 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { css, cx, injectGlobal } from '@emotion/css';
-import { ThemeType } from 'types/toolbar';
+import { SystemInfoConfig, ThemeType, ToolbarConfig } from 'types/toolbar';
 import themeObject from '../theme';
 
 import Battery from './plugins/Battery';
@@ -10,19 +10,37 @@ injectGlobal`
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap');
 `;
 
+export interface HyperToolbarProps {
+  config: ToolbarConfig;
+}
+
 export const ThemeContext = React.createContext<ThemeType>('light');
 
-export const HyperToolbar: FC = () => {
-  const [theme, setTheme] = useState<ThemeType>('dark');
-
+export const HyperToolbar: FC<HyperToolbarProps> = ({ config }) => {
+  const [theme, setTheme] = useState<ThemeType>(config.theme);
   const styles = getStyles(theme);
+
+  useEffect(() => {
+    setTheme(config.theme);
+  }, [config.theme]);
+
+  const getPlugins = () => {
+    const plugins = config.plugins.map((plugin) => {
+      switch (plugin.name) {
+        case 'battery':
+          return <Battery key={plugin.name} />;
+        case 'time':
+          return <Time key={plugin.name} />;
+        default:
+          return null;
+      }
+    });
+    return plugins;
+  };
 
   return (
     <ThemeContext.Provider value={theme}>
-      <div className={cx(styles.statusBarStyle)}>
-        <Battery />
-        <Time />
-      </div>
+      <div className={cx(styles.statusBarStyle)}>{getPlugins()}</div>
     </ThemeContext.Provider>
   );
 };

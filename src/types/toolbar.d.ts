@@ -30,3 +30,24 @@ export interface Theme {
     };
   };
 }
+
+export type PluginType = 'battery' | 'time' | 'systeminfo';
+
+export interface PluginConfig {
+  name: PluginType;
+}
+
+export type SystemInfoMeasurementType = 'cpu' | 'memory' | 'network';
+export interface SystemInfoConfig extends PluginConfig {
+  name: 'systeminfo';
+  measurement: SystemInfoMeasurementType[];
+}
+
+export interface ToolbarConfig {
+  theme: ThemeType;
+  plugins: PluginConfig[];
+}
+
+export interface HOCProps {
+  toolbar: ToolbarConfig;
+}

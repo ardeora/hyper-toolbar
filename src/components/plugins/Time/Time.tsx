@@ -59,7 +59,7 @@ export const Time = () => {
       <div
         id="tooltip"
         ref={popupRef}
-        style={styles.popper}
+        style={{ ...styles.popper, display: timezoneListOpen ? 'block' : 'none' }}
         {...attributes.popper}
         className={cx(componentStyles.timeDropdown)}
       >

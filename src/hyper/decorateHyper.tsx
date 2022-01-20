@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { HyperToolbar } from '../components/HyperToolbar';
-// import { HOCState, HOCProps } from '../types/toolbar';
+import { HOCProps } from '../types/toolbar';
 
 export default function (Hyper) {
-  return class HyperContainer extends Component {
+  return class HyperContainer extends Component<HOCProps> {
     constructor(props) {
+      console.log('PROPS', props);
       super(props);
     }
 
@@ -12,7 +13,7 @@ export default function (Hyper) {
       return (
         <>
           <Hyper {...this.props} />
-          <HyperToolbar />
+          <HyperToolbar config={this.props.toolbar} />
         </>
       );
     }

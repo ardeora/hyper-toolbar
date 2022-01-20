@@ -1,6 +1,6 @@
 const mapHyperState = (state, map) => {
   return Object.assign({}, map, {
-    wallpapers: state.ui.wallpapers || {},
+    toolbar: state.ui.toolbar || {},
   });
 };
 
