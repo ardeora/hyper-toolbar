@@ -1,4 +1,5 @@
-export type RPCEventListener = () => void;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type RPCEventListener = (...args: any[]) => void;
 
 interface Battery {
   readonly charging: boolean;
@@ -24,7 +25,8 @@ declare global {
     rpc: {
       on: (event: string, callback: RPCEventListener) => void;
       removeListener: (event: string, callback: RPCEventListener) => void;
-      emit: (event: string) => void;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      emit: (event: string, payload?: any) => void;
     };
   }
 }

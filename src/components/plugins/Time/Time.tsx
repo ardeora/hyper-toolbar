@@ -84,11 +84,16 @@ export const Time = () => {
 };
 
 const getStyles = (theme: ThemeType) => {
-  const colorMode = themeObject[theme];
+  const { colors, alpha, font } = themeObject;
+  const timeColor = theme === 'light' ? colors.slate[700] : colors.slate[300];
+  const timeHoverColor = theme === 'light' ? `${colors.black}${alpha[10]}` : `${colors.white}${alpha[10]}`;
+  const arrowColor = theme === 'light' ? `${colors.white}${alpha[50]}` : `${colors.black}${alpha[50]}`;
   return {
     time: css`
-      color: ${colorMode.colors.secondary};
-      font-size: ${themeObject.common.font.md};
+      width: max-content;
+      color: ${timeColor};
+      font-size: ${font.md};
+      font-variant-numeric: tabular-nums;
       display: flex;
       padding: 0px 12px;
       align-items: center;
@@ -99,7 +104,7 @@ const getStyles = (theme: ThemeType) => {
       position: relative;
     `,
     timeDropdown: css`
-      border: none;
+      border: none !important;
     `,
     arrow: css`
       position: absolute;
@@ -107,7 +112,7 @@ const getStyles = (theme: ThemeType) => {
       height: 0;
       border-left: 8px solid transparent;
       border-right: 8px solid transparent;
-      border-top: 8px solid ${theme == 'light' ? `rgba(255, 255, 255, 0.5)` : 'rgba(0, 0, 0, 0.5)'};
+      border-top: 8px solid ${arrowColor};
       top: 100%;
     `,
     buttonHitArea: css`
@@ -119,7 +124,7 @@ const getStyles = (theme: ThemeType) => {
       border-radius: 4px;
       cursor: pointer;
       &:hover {
-        background-color: ${theme == 'light' ? `rgba(0, 0, 0, 0.1)` : '#ffffff1a'};
+        background-color: ${timeHoverColor};
       }
     `,
   };

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { getTimeZoneList } from './util';
+import { getTimeZoneList } from '../../../utils';
 import { ThemeType } from 'types/toolbar';
 import { ThemeContext } from '../../HyperToolbar';
 import themeObject from '../../../theme';
@@ -90,12 +90,18 @@ export const TimezoneSearch: React.FC<TimezoneSearchProps> = ({ isOpen, onSelect
 };
 
 const getStyles = (theme: ThemeType) => {
-  const colorMode = themeObject[theme];
+  const { colors, alpha, font } = themeObject;
+  const primary = theme === 'light' ? colors.slate[800] : colors.slate[200];
+  const secondary = theme === 'light' ? colors.slate[700] : colors.slate[300];
+  const tertiary = theme === 'light' ? colors.slate[500] : colors.slate[600];
+
+  const dropdownContentBackground = theme === 'light' ? `${colors.white}${alpha[50]}` : `${colors.black}${alpha[50]}`;
+
   return {
     timeDropdownContent: css`
       width: 175px;
       height: 200px;
-      background: ${theme == 'light' ? `rgba(255, 255, 255, 0.5)` : 'rgba(0, 0, 0, 0.5)'};
+      background: ${dropdownContentBackground};
       border-radius: 8px;
       display: grid;
       grid-template-rows: 40px auto;
@@ -107,7 +113,6 @@ const getStyles = (theme: ThemeType) => {
         width: 175px;
         height: 200px;
         z-index: -1;
-        -webkit-backdrop-filter: blur(8px);
         backdrop-filter: blur(8px);
       }
     `,
@@ -124,18 +129,18 @@ const getStyles = (theme: ThemeType) => {
       background: none;
       outline: none;
       border: none;
-      border-bottom: 1px solid ${colorMode.colors.tertiary};
-      font-size: ${themeObject.common.font.sm};
-      color: ${colorMode.colors.primary};
+      border-bottom: 1px solid ${tertiary};
+      font-size: ${font.sm};
+      color: ${primary};
       &::placeholder {
-        color: ${colorMode.colors.secondary};
+        color: ${secondary};
       }
     `,
     searchIconContainer: css`
       display: flex;
       align-items: center;
       opacity: 0.6;
-      color: ${colorMode.colors.secondary};
+      color: ${secondary};
     `,
     timezoneList: css`
       overflow-y: auto;
@@ -145,14 +150,14 @@ const getStyles = (theme: ThemeType) => {
       padding: 12px 12px;
       cursor: pointer;
       border-radius: 4px;
-      background: ${theme == 'light' ? `rgba(255, 255, 255, 0.8)` : '#94a3b869'};
+      background: ${theme == 'light' ? `rgba(255, 255, 255, 0.6)` : '#94a3b869'};
       font-size: 12px;
       margin-bottom: 8px;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
       text-align: center;
-      color: ${colorMode.colors.primary};
+      color: ${primary};
       &:hover {
         background: ${theme == 'light' ? `rgba(255, 255, 255, 0.4)` : '#94a3b899'};
       }

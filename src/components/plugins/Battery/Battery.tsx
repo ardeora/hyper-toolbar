@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect, useContext } from 'react';
 import { unstable_batchedUpdates } from 'react-dom';
 import { css, cx } from '@emotion/css';
 import { NavigatorExtended } from 'types/hyper';
-import { secondsToHms } from './util';
+import { secondsToHms } from '../../../utils';
 import { BatteryIcon } from './BatteryIcon';
 import { ThemeType } from 'types/toolbar';
 import { ThemeContext } from '../../HyperToolbar';
@@ -64,9 +64,12 @@ export const Battery: FC = () => {
 };
 
 const getStyles = (theme: ThemeType) => {
+  const { colors, font } = themeObject;
+  const levelColor = theme === 'light' ? colors.slate[800] : colors.slate[200];
+  const timeColor = theme === 'light' ? colors.slate[700] : colors.slate[300];
   return {
     battery: css`
-      font-size: 14px;
+      font-size: ${font.md};
       display: flex;
       padding: 0px 12px;
       & > * {
@@ -78,18 +81,18 @@ const getStyles = (theme: ThemeType) => {
     `,
     batteryTime: css`
       font-weight: 500;
-      font-size: ${themeObject.common.font.sm};
+      font-size: ${font.sm};
       display: flex;
       align-items: center;
-      color: ${themeObject[theme].colors.secondary};
+      color: ${timeColor};
     `,
     batteryLevel: css`
       font-weight: 500;
       display: flex;
-      font-size: ${themeObject.common.font.md};
+      font-size: ${font.md};
       align-items: center;
       line-height: 100%;
-      color: ${themeObject[theme].colors.primary};
+      color: ${levelColor};
     `,
     batteryIcon: css`
       display: flex;
